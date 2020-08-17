@@ -42,6 +42,10 @@ async function handleRequest(req) {
     // https://botscout.com/api.htm
     // https://viewdns.info/
     // https://intelx.io/
+    // https://www.zoomeye.org/searchResult?q=5.188.84.104
+    // https://bgp.he.net/ip/5.188.84.104
+    // https://intelx.io/?s=5.188.84.104
+    // https://iknowwhatyoudownload.com/en/peer/?ip=45.121.209.164
 
     if (api == 'ibm' || api == 'xforce') { // https://api.xforce.ibmcloud.com/doc/#auth
         return await newAPI(`https://exchange.xforce.ibmcloud.com/api/ipr/${ip}`, {
@@ -87,11 +91,32 @@ async function handleRequest(req) {
     //     }, "POST", `ip=${ip}`)
     // }
     } else if (api == 'zerospam') { // https://zerospam.org/spam-blacklist-api/
-        return await newAPI(`https://zerospam.org/wp-json/v1/query`, {
-            'accept': 'application/json',
-            'content-type': 'application/json'
-        }, "POST", JSON.stringify({ip:ip}))
+        return await newAPI(
+            `https://zerospam.org/wp-json/v1/query`,
+            {
+                'accept': 'application/json',
+                'content-type': 'application/json'
+            }, {
+                method: "POST",
+                body: JSON.stringify({ip:ip})
+            }
+        )
     }
+    //  else if (api == 'talos') {
+    //     // https://talosintelligence.com/reputation_center/lookup?search=1.1.1.1
+    //     // https://stackoverflow.com/questions/45684786/python-request-for-json-file-returns-none
+    //     // https://github.com/TheHive-Project/Cortex/issues/219
+    //     // https://github.com/cescobarresi/ciscoreputation/blob/master/ciscoreputation/ciscoreputation.py
+    //     return await newAPI(`https://talosintelligence.com/sb_api/query_lookup?query=%2Fapi%2Fv2%2Fdetails%2Fip%2F&query_entry=${ip}&offset=0&order=ip%20asc`, {
+    //         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101 Firefox/78.0',
+    //         'Accept': 'application/json, text/javascript, */*; q=0.01',
+    //         'Accept-Language': 'en-US,en;q=0.5',
+    //         'Connection': 'keep-alive',
+    //         'TE': 'Trailers'
+    //     } ,{
+    //         'referer': `https://talosintelligence.com/reputation_center/lookup?search=${ip}`
+    //     })
+    // }
 
     // https://auth0.com/signals/docs/#how-to-use-the-api
     return await newAPI(`https://signals.api.auth0.com/v2.0/ip/${ip}`, {
@@ -140,23 +165,21 @@ function isIP(str) {
  * @param {url} string
  * @param {headers} object
  */
-async function newAPI(url, headers = {'accept': 'application/json'}, method = "GET", body = undefined) {
-    let request = new Request(url, {
-        headers: headers,
-        method: method,
-        body: body,
-        cf: {
-            // Tell Cloudflare's CDN to always cache this fetch regardless of content type
-            // for a max of x seconds before revalidating the resource
-            // cacheTtl: 86400, // 1 day
-            cacheTtlByStatus: {
-                "200-299": 2592000, // 30 days
-                404: 300, // 5 min
-                "500-599": -1
-            },
-            cacheEverything: true,
+async function newAPI(url, headers = {'accept': 'application/json'}, options = {}) {
+    options.headers = headers
+    options.cf = {
+        // Tell Cloudflare's CDN to always cache this fetch regardless of content type
+        // for a max of x seconds before revalidating the resource
+        // cacheTtl: 86400, // 1 day
+        cacheTtlByStatus: {
+            "200-299": 2592000, // 30 days
+            404: 300, // 5 min
+            "500-599": -1
         },
-    })
+        cacheEverything: true,
+    }
+
+    let request = new Request(url, options)
 
     return await fetch(request)
 

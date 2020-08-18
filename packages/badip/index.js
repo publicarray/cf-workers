@@ -46,6 +46,7 @@ async function handleRequest(req) {
     // https://bgp.he.net/ip/5.188.84.104
     // https://intelx.io/?s=5.188.84.104
     // https://iknowwhatyoudownload.com/en/peer/?ip=45.121.209.164
+    // https://ipgeolocation.io/
 
     if (api == 'ibm' || api == 'xforce') { // https://api.xforce.ibmcloud.com/doc/#auth
         return await newAPI(`https://exchange.xforce.ibmcloud.com/api/ipr/${ip}`, {
@@ -58,17 +59,11 @@ async function handleRequest(req) {
             'authorization': 'Basic ' + btoa(IBM_XFORCE_API_KEY + ':' + IBM_XFORCE_API_PASSWORD),
         })
     } else if (api == 'badips' || api == 'badip' || api == 'badips.com') { // https://www.badips.com/documentation#7
-        return await newAPI(`https://www.badips.com/get/info/${ip}`, {
-            'accept': 'application/json'
-        })
+        return await newAPI(`https://www.badips.com/get/info/${ip}`)
     } else if (api == 'stopforumspam') { // https://www.stopforumspam.com/usage // included in signals
-        return await newAPI(`https://api.stopforumspam.org/api?ip=${ip}&jsonp`, {
-            'accept': 'application/json'
-        })
+        return await newAPI(`https://api.stopforumspam.org/api?ip=${ip}&jsonp`)
     } else if (api == 'iptoasn', api == 'asn') { // https://iptoasn.com/
-        return await newAPI(`https://api.iptoasn.com/v1/as/ip/${ip}`, {
-            'accept': 'application/json'
-        })
+        return await newAPI(`https://api.iptoasn.com/v1/as/ip/${ip}`)
     } else if (api == 'securitytrails' || api == 'dns') {
         // https://docs.securitytrails.com/docs/overview
         // https://docs.securitytrails.com/reference#general
@@ -77,13 +72,9 @@ async function handleRequest(req) {
             'apikey': SECURITYTRAILS_API_KEY,
         })
     } else if (api == 'ipinfo') { // https://ipinfo.io/developers
-        return await newAPI(`https://ipinfo.io/${ip}?token=${IPINFO_TOKEN}`, {
-            'accept': 'application/json'
-        })
+        return await newAPI(`https://ipinfo.io/${ip}?token=${IPINFO_TOKEN}`)
     } else if (api == 'shodan') { // https://developer.shodan.io/api
-        return await newAPI(`https://api.shodan.io/shodan/host/${ip}?key=${SHODAN_API_KEY}&minify=true`, {
-            'accept': 'application/json'
-        })
+        return await newAPI(`https://api.shodan.io/shodan/host/${ip}?key=${SHODAN_API_KEY}&minify=true`)
     // } else if (api == 'zerospam') { // https://zerospam.org/spam-blacklist-api/
     //     return await newAPI(`https://zerospam.org/wp-json/v1/query`, {
     //         'accept': 'application/json',
@@ -101,6 +92,8 @@ async function handleRequest(req) {
                 body: JSON.stringify({ip:ip})
             }
         )
+    } else if (api == 'ipgeolocation' || api == 'ipgeo') { // https://ipgeolocation.io/documentation/ip-geolocation-api.html
+        return await newAPI(`https://api.ipgeolocation.io/ipgeo?apiKey=${IPGEO_API_KEY}&ip=${ip}`)
     }
     //  else if (api == 'talos') {
     //     // https://talosintelligence.com/reputation_center/lookup?search=1.1.1.1

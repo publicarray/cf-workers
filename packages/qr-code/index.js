@@ -4,13 +4,22 @@ const generate = async (request) => {
     const { searchParams } = new URL(request.url)
     let text = 'https://qr.seby.io'
     let format = 'png'
-    if (searchParams.has("text") && searchParams.has("format")) {
+    if (searchParams.has("text")) {
         text = searchParams.get("text")
-        format = searchParams.get("format")
+        if (searchParams.has("format")) {
+            format = searchParams.get("format")
+        }
     } else {
-        let json = await request.json()
-        text = json.text
-        format = json.format
+        try {
+            let json = await request.json()
+            text = json.text
+            format = json.format || "png"
+        } catch {
+            return new Response("400 Bad request", {
+                status: 400,
+                headers: {'Content-Type': 'text/plain'}
+            })
+        }
     }
     let headers = {}
     let img
@@ -39,6 +48,8 @@ const landing = `<!DOCTYPE html>
 <button onclick="generate()">Generate QR Code</button>
 
 <div style="max-width:500px;" id="result">
+
+<p><pre>curl 'https://qr.seby.io/' --get -d 'text=https://qr.seby.io' -d 'format=svg'</pre></p>
 
 <script>
     async function generate() {
@@ -91,7 +102,6 @@ async function handleRequest(request) {
     if (request.method === 'POST' || searchParams.has("text")) {
         response = await generate(request)
     } else {
-        new URL(request.url)
         response = new Response(landing, {
             headers: {
                 'Content-Type': 'text/html; charset=utf-8',

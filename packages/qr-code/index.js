@@ -15,7 +15,7 @@ const generate = async (request) => {
     let headers = {}
     let img
     if (format == "svg") {
-        headers = { 'Content-Type': 'image/svg' }
+        headers = { 'Content-Type': 'image/svg+xml' }
         img = qr.imageSync(text, { type: 'svg' })
     } else {
         headers = { 'Content-Type': 'image/png' }

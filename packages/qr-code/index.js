@@ -1,29 +1,29 @@
- import qr from 'qr-image'
+import qr from 'qr-image'
 
 const generate = async (request) => {
     const { searchParams } = new URL(request.url)
     let text = 'https://qr.seby.io'
     let format = 'png'
-    if (searchParams.has("text")) {
-        text = searchParams.get("text")
-        if (searchParams.has("format")) {
-            format = searchParams.get("format")
+    if (searchParams.has('text')) {
+        text = searchParams.get('text')
+        if (searchParams.has('format')) {
+            format = searchParams.get('format')
         }
     } else {
         try {
             let json = await request.json()
-            text = json.text
-            format = json.format || "png"
-        } catch {
-            return new Response("400 Bad request", {
+        } catch (error) {
+            return new Response('400 Bad request', {
                 status: 400,
-                headers: {'Content-Type': 'text/plain'}
+                headers: { 'Content-Type': 'text/plain' },
             })
         }
+        text = json.text || ''
+        format = json.format || 'png'
     }
     let headers = {}
     let img
-    if (format == "svg") {
+    if (format == 'svg') {
         headers = { 'Content-Type': 'image/svg+xml' }
         img = qr.imageSync(text, { type: 'svg' })
     } else {
@@ -97,9 +97,9 @@ const landing = `<!DOCTYPE html>
 
 async function handleRequest(request) {
     let response
-    let {searchParams} = new URL(request.url)
-    console.log(searchParams, searchParams.has("text"))
-    if (request.method === 'POST' || searchParams.has("text")) {
+    let { searchParams } = new URL(request.url)
+    console.log(searchParams, searchParams.has('text'))
+    if (request.method === 'POST' || searchParams.has('text')) {
         response = await generate(request)
     } else {
         response = new Response(landing, {

@@ -11,7 +11,7 @@ const generate = async (request) => {
         }
     } else {
         let json = {}
-        try {
+        try {// for POST that are not json
             json = await request.json()
         } catch (error) {
             return new Response('400 Bad request', {
@@ -50,7 +50,8 @@ const landing = `<!DOCTYPE html>
 
 <div style="max-width:500px;" id="result">
 
-<p><pre>curl 'https://qr.seby.io/' --get -d 'text=https://qr.seby.io' -d 'format=svg'</pre></p>
+<p><pre>curl 'https://qr.seby.io/' --get -d 'text=https://qr.seby.io' -d 'format=svg'
+curl 'https://qr.seby.io/' -H 'Content-Type: application/json' --data-raw '{"text":"https://google.com","format":"svg"}'</pre></p>
 
 <script>
     async function generate() {

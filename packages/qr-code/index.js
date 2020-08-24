@@ -1,14 +1,25 @@
  import qr from 'qr-image'
 
 const generate = async (request) => {
-    const { text, format } = await request.json()
-    let headers = { 'Content-Type': 'image/png' }
-    let img = null
+    const { searchParams } = new URL(request.url)
+    let text = 'https://qr.seby.io'
+    let format = 'png'
+    if (searchParams.has("text") && searchParams.has("format")) {
+        text = searchParams.get("text")
+        format = searchParams.get("format")
+    } else {
+        let json = await request.json()
+        text = json.text
+        format = json.format
+    }
+    let headers = {}
+    let img
     if (format == "svg") {
         headers = { 'Content-Type': 'image/svg' }
-        img = qr.imageSync(text || 'https://qr.seby.io',  { type: 'svg' })
+        img = qr.imageSync(text, { type: 'svg' })
     } else {
-        img = qr.imageSync(text || 'https://qr.seby.io', { size: 15 })
+        headers = { 'Content-Type': 'image/png' }
+        img = qr.imageSync(text, { size: 15 })
     }
     return new Response(img, { headers })
 }
@@ -75,9 +86,12 @@ const landing = `<!DOCTYPE html>
 
 async function handleRequest(request) {
     let response
-    if (request.method === 'POST') {
+    let {searchParams} = new URL(request.url)
+    console.log(searchParams, searchParams.has("text"))
+    if (request.method === 'POST' || searchParams.has("text")) {
         response = await generate(request)
     } else {
+        new URL(request.url)
         response = new Response(landing, {
             headers: {
                 'Content-Type': 'text/html; charset=utf-8',

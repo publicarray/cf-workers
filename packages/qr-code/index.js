@@ -10,8 +10,9 @@ const generate = async (request) => {
             format = searchParams.get('format')
         }
     } else {
+        let json = {}
         try {
-            let json = await request.json()
+            json = await request.json()
         } catch (error) {
             return new Response('400 Bad request', {
                 status: 400,

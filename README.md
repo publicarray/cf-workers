@@ -2,7 +2,7 @@
 
 [Show Workers](./packages)
 
-#### [Lerna](https://github.com/lerna/lerna)
+#### You can use [Lerna](https://github.com/lerna/lerna) to operate on all projects
 
     
 ```

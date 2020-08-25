@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!-- http://127.0.0.1:8080/confetti.html?text=Happy%20Birthday%20Peter! -->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>🎊 Happy Birthday! 🎊</title>
+</head>
+<body>
+<style type="text/css">
+    /*https://codepen.io/ClaireLarsen/pen/XmVyVX/*/
+    @import url(https://fonts.googleapis.com/css?family=Montserrat);
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 800;
+        background: #030321;
+    }
+    h1 {
+        position: absolute;
+        top: 10%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 5em;
+    }
+    svg {
+        position: absolute;
+        top: 10%;
+        left: 0;
+        right: 0;
+        display: block;
+        font: 5em 'Montserrat';
+        width: 960px;
+        height: 300px;
+        margin: 0 auto;
+    }
+
+    .text-copy {
+        fill: none;
+        stroke: white;
+        stroke-dasharray: 6% 29%;
+        stroke-width: 3px;
+        stroke-dashoffset: 0%;
+        animation: stroke-offset 5.5s infinite linear;
+    }
+
+    .text-copy:nth-child(1){
+        stroke: #4D163D;
+        animation-delay: -1;
+    }
+
+    .text-copy:nth-child(2){
+        stroke: #840037;
+        animation-delay: -2s;
+    }
+
+    .text-copy:nth-child(3){
+        stroke: #BD0034;
+        animation-delay: -3s;
+    }
+
+    .text-copy:nth-child(4){
+        stroke: #BD0034;
+        animation-delay: -4s;
+    }
+
+    .text-copy:nth-child(5){
+        stroke: #FDB731;
+        animation-delay: -5s;
+    }
+
+    @keyframes stroke-offset{
+        100% {stroke-dashoffset: -35%;}
+    }
+    canvas {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        pointer-events: none;
+        z-index: -1;
+    }
+</style>
+<canvas id="confetti-holder"></canvas>
+<!-- <h1 id="text">Happy Birthday!</h1> -->
+<svg viewBox="0 0 960 300"  >
+    <symbol id="s-text">
+        <text id="text" text-anchor="middle" x="50%" y="80%" textLength='960' lengthAdjust="spacing">Happy Birthday!</text>
+    </symbol>
+
+    <g class = "g-ants">
+        <use xlink:href="#s-text" class="text-copy"></use>
+        <use xlink:href="#s-text" class="text-copy"></use>
+        <use xlink:href="#s-text" class="text-copy"></use>
+        <use xlink:href="#s-text" class="text-copy"></use>
+        <use xlink:href="#s-text" class="text-copy"></use>
+    </g>
+</svg>
+<script>
+    const {searchParams} = new URL(document.location)
+    if (searchParams.get("text")) {
+        let newText = `🎊 ${searchParams.get("text")} 🎊`
+        // document.getElementById("text").innerText = newText
+        document.getElementById("text").innerHTML = newText
+        document.title = newText
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
+<script>
+// https://github.com/Agezao/confetti-js
+var confetti = new ConfettiGenerator({
+    rotate: true,
+    max: 150,
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+});
+setTimeout(confetti.render, 4000) //4s
+</script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.2.0/dist/confetti.browser.min.js"></script>
+<script>
+// https://github.com/catdad/canvas-confetti
+let end = Date.now() + (10 * 1000);
+
+let confettiCanvas = document.createElement('canvas');
+document.querySelector("html").appendChild(confettiCanvas);
+confettiCanvas.width=document.documentElement.clientWidth
+confettiCanvas.height=document.documentElement.clientHeight
+
+let myConfetti = confetti.create(confettiCanvas, {
+  resize: true,
+  useWorker: true
+});
+
+(function frame() {
+  myConfetti({
+    particleCount: 6,
+    angle: 60,
+    spread: 55,
+    origin: { x: 0, y: 1 },
+    startVelocity: 75,
+  });
+  myConfetti({
+    particleCount: 6,
+    angle: 120,
+    spread: 55,
+    origin: { x: 1, y: 1 },
+    startVelocity: 75,
+  });
+
+  if (Date.now() < end) {
+    requestAnimationFrame(frame);
+  }
+}());
+
+// play effect and add comfetti on touch/click
+let sound = new Audio("party-horn.ogg");
+function playEffect(event) {
+    let x = event.clientX/document.documentElement.clientWidth
+    let y = event.clientY/document.documentElement.clientHeight
+
+    myConfetti({
+        particleCount: 50,
+        spread: 360,
+        origin: { x: x, y: y },
+        startVelocity: 20,
+    });
+
+    // event.preventDefault()
+    let promise = sound.play();
+    if (promise !== undefined) {
+        promise.catch(error => {
+            console.debug('Autoplay was denied')
+        })
+    }
+}
+let body=document.querySelector("html")
+body.addEventListener("click", playEffect)
+body.addEventListener("touchstart", playEffect)
+let promise = sound.play(); // try to play on load
+if (promise !== undefined) {
+    promise.catch(error => {
+        console.debug('Autoplay was denied')
+    })
+}
+</script>
+</body>

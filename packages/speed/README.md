@@ -1,10 +1,25 @@
 ## Speed Test
 
+https://github.com/cloudflare/worker-speedtest-template
+
+```sh
+# Download
+curl "https://speed.seby.io/down?bytes=10000000" > /dev/null
+wget -O /dev/null -q --show-progress "https://speed.seby.io/down?bytes=10000000"
+# Upload
+dd if=/dev/zero bs=1000 count=3000 | curl -X POST --upload-file - "https://speed.seby.io/up" >/dev/null
+
+dd if=/dev/urandom of=test.dat bs=1M count=10
+curl --http1.1 -w '%{speed_upload}\n' -sf -o/dev/null --data-binary @test.dat https://speed.seby.io/up
+curl --http2 -w '%{speed_upload}\n' -sf -o/dev/null --data-binary @test.dat https://speed.seby.io/up
+```
+
+
 Worker for measuring download / upload connection speed from the client side, using the [Performance Timing API](https://w3c.github.io/perf-timing-primer/).
 
 [`index.js`](https://github.com/cloudflare/worker-speedtest-template/blob/master/router.js) is the content of the Workers script.
 
-*Note:* when running this as your own worker, your latency measurements may differ a small amount from the [official version](https://speed.cloudflare.com). This is due to the fact that we rely on an internal mechanism to determine the amount of server processing time, which is then subtracted from the measurement.
+_Note:_ when running this as your own worker, your latency measurements may differ a small amount from the [official version](https://speed.cloudflare.com). This is due to the fact that we rely on an internal mechanism to determine the amount of server processing time, which is then subtracted from the measurement.
 
 #### Wrangler
 

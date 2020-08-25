@@ -1,4 +1,11 @@
-# QR Code Generator, built with Workers
+# QR Code Generator, built with Workers - [Demo](https://qr.seby.io)
+
+This is a modified version with a browser preview and optional SVG format
+
+```
+curl 'https://qr.seby.io/' --get -d 'text=https://qr.seby.io' -d 'format=svg'
+curl 'https://qr.seby.io/' --data-raw '{"text":"https://google.com","format":"svg"}'
+```
 
 ![Example](https://developers.cloudflare.com/workers/tutorials/build-a-serverless-function/media/demo.png)
 

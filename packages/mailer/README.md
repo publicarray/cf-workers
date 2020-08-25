@@ -1,6 +1,5 @@
 # Send ✉️ via AWS SES
 
-
 #### Wrangler
 
 To generate using [wrangler](https://github.com/cloudflare/wrangler)

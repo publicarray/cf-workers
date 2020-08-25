@@ -1,8 +1,8 @@
-# 👷 `worker-template` Hello World
+# Return Cilent IP Address - [Demo](https://ip.seby.io)
 
-A template for kick starting a Cloudflare worker project.
-
-[`index.js`](https://github.com/cloudflare/worker-template/blob/master/index.js) is the content of the Workers script.
+```
+curl 'https://ip.seby.io'
+```
 
 #### Wrangler
 

@@ -36,8 +36,8 @@ const generate = async (request) => {
 
 const landing = `<!DOCTYPE html>
 <head>
-    <!-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@1/dist/tailwind.min.css" rel="stylesheet"></link>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>QR Generator</title>
 </head>
 <body class="container mx-auto">

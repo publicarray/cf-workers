@@ -80,7 +80,6 @@
     }
 </style>
 <canvas id="confetti-holder"></canvas>
-<!-- <h1 id="text">Happy Birthday!</h1> -->
 <svg viewBox="0 0 960 300"  >
     <symbol id="s-text">
         <text id="text" text-anchor="middle" x="50%" y="80%" textLength='960' lengthAdjust="spacing">Happy Birthday!</text>
@@ -98,7 +97,6 @@
     const {searchParams} = new URL(document.location)
     if (searchParams.get("text")) {
         let newText = `🎊 ${searchParams.get("text")} 🎊`
-        // document.getElementById("text").innerText = newText
         document.getElementById("text").innerHTML = newText
         document.title = newText
     }
@@ -163,7 +161,6 @@ function playEffect(event) {
         startVelocity: 20,
     });
 
-    // event.preventDefault()
     let promise = sound.play();
     if (promise !== undefined) {
         promise.catch(error => {

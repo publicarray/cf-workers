@@ -3,7 +3,7 @@ async function handleRequest(request) {
     let colours = parameters.get('color') || parameters.get('colour')
     if (colours === null) {
         return new Response('Please pass in colours via query string', {
-            status: 404
+            status: 404,
         })
     }
     return new Response(colours, {

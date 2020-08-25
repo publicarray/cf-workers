@@ -15,6 +15,10 @@ async function handleRequest(request) {
 
 function randomNumber(max) {
     // Divide a random UInt32 by the maximum value (2^32 -1) to get a result between 0 and 1
-    return Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295 * max) + 1
+    return (
+        Math.floor(
+            (crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295) * max,
+        ) + 1
+    )
 }
 module.exports = handleRequest

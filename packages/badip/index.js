@@ -14,9 +14,12 @@ async function handleRequest(req) {
     console.log(ip)
     if (!isIP(ip)) {
         // Show usage
-        return new Response(`Usage: curl -s 'https://badip.seby.io/127.0.0.1' | jq`, {
-            headers: { 'content-type': 'text/plain' },
-        })
+        return new Response(
+            `Usage: curl -s 'https://badip.seby.io/127.0.0.1' | jq`,
+            {
+                headers: { 'content-type': 'text/plain' },
+            },
+        )
 
         // ip =
         //     req.headers.get('cf-connecting-ip') ||
@@ -28,7 +31,6 @@ async function handleRequest(req) {
     if (params.has('api')) {
         api = params.get('api')
     }
-
 
     // console.log(ip)
     // full_reputaion = await new Request(`https://signals.api.auth0.com/v2.0/ip/${ip}`, {
@@ -48,52 +50,76 @@ async function handleRequest(req) {
     // https://iknowwhatyoudownload.com/en/peer/?ip=45.121.209.164
     // https://ipgeolocation.io/
 
-    if (api == 'ibm' || api == 'xforce') { // https://api.xforce.ibmcloud.com/doc/#auth
-        return await newAPI(`https://exchange.xforce.ibmcloud.com/api/ipr/${ip}`, {
-            'accept': 'application/json',
-            'authorization': 'Basic ' + btoa(IBM_XFORCE_API_KEY + ':' + IBM_XFORCE_API_PASSWORD),
-        })
-    } else if (api == 'whois') { // https://api.xforce.ibmcloud.com/doc/#resource_WHOIS
+    if (api == 'ibm' || api == 'xforce') {
+        // https://api.xforce.ibmcloud.com/doc/#auth
+        return await newAPI(
+            `https://exchange.xforce.ibmcloud.com/api/ipr/${ip}`,
+            {
+                accept: 'application/json',
+                authorization:
+                    'Basic ' +
+                    btoa(IBM_XFORCE_API_KEY + ':' + IBM_XFORCE_API_PASSWORD),
+            },
+        )
+    } else if (api == 'whois') {
+        // https://api.xforce.ibmcloud.com/doc/#resource_WHOIS
         return await newAPI(`https://api.xforce.ibmcloud.com/whois/${ip}`, {
-            'accept': 'application/json',
-            'authorization': 'Basic ' + btoa(IBM_XFORCE_API_KEY + ':' + IBM_XFORCE_API_PASSWORD),
+            accept: 'application/json',
+            authorization:
+                'Basic ' +
+                btoa(IBM_XFORCE_API_KEY + ':' + IBM_XFORCE_API_PASSWORD),
         })
-    } else if (api == 'badips' || api == 'badip' || api == 'badips.com') { // https://www.badips.com/documentation#7
+    } else if (api == 'badips' || api == 'badip' || api == 'badips.com') {
+        // https://www.badips.com/documentation#7
         return await newAPI(`https://www.badips.com/get/info/${ip}`)
-    } else if (api == 'stopforumspam') { // https://www.stopforumspam.com/usage // included in signals
+    } else if (api == 'stopforumspam') {
+        // https://www.stopforumspam.com/usage // included in signals
         return await newAPI(`https://api.stopforumspam.org/api?ip=${ip}&jsonp`)
-    } else if (api == 'iptoasn', api == 'asn') { // https://iptoasn.com/
+    } else if ((api == 'iptoasn', api == 'asn')) {
+        // https://iptoasn.com/
         return await newAPI(`https://api.iptoasn.com/v1/as/ip/${ip}`)
     } else if (api == 'securitytrails' || api == 'dns') {
         // https://docs.securitytrails.com/docs/overview
         // https://docs.securitytrails.com/reference#general
-        return await newAPI(`https://api.securitytrails.com/v1/ips/nearby/${ip}`, {
-            'accept': 'application/json',
-            'apikey': SECURITYTRAILS_API_KEY,
-        })
-    } else if (api == 'ipinfo') { // https://ipinfo.io/developers
+        return await newAPI(
+            `https://api.securitytrails.com/v1/ips/nearby/${ip}`,
+            {
+                accept: 'application/json',
+                apikey: SECURITYTRAILS_API_KEY,
+            },
+        )
+    } else if (api == 'ipinfo') {
+        // https://ipinfo.io/developers
         return await newAPI(`https://ipinfo.io/${ip}?token=${IPINFO_TOKEN}`)
-    } else if (api == 'shodan') { // https://developer.shodan.io/api
-        return await newAPI(`https://api.shodan.io/shodan/host/${ip}?key=${SHODAN_API_KEY}&minify=true`)
-    // } else if (api == 'zerospam') { // https://zerospam.org/spam-blacklist-api/
-    //     return await newAPI(`https://zerospam.org/wp-json/v1/query`, {
-    //         'accept': 'application/json',
-    //         'content-type': 'application/x-www-form-urlencoded'
-    //     }, "POST", `ip=${ip}`)
-    // }
-    } else if (api == 'zerospam') { // https://zerospam.org/spam-blacklist-api/
+    } else if (api == 'shodan') {
+        // https://developer.shodan.io/api
+        return await newAPI(
+            `https://api.shodan.io/shodan/host/${ip}?key=${SHODAN_API_KEY}&minify=true`,
+        )
+        // } else if (api == 'zerospam') { // https://zerospam.org/spam-blacklist-api/
+        //     return await newAPI(`https://zerospam.org/wp-json/v1/query`, {
+        //         'accept': 'application/json',
+        //         'content-type': 'application/x-www-form-urlencoded'
+        //     }, "POST", `ip=${ip}`)
+        // }
+    } else if (api == 'zerospam') {
+        // https://zerospam.org/spam-blacklist-api/
         return await newAPI(
             `https://zerospam.org/wp-json/v1/query`,
             {
-                'accept': 'application/json',
-                'content-type': 'application/json'
-            }, {
-                method: "POST",
-                body: JSON.stringify({ip:ip})
-            }
+                accept: 'application/json',
+                'content-type': 'application/json',
+            },
+            {
+                method: 'POST',
+                body: JSON.stringify({ ip: ip }),
+            },
         )
-    } else if (api == 'ipgeolocation' || api == 'ipgeo') { // https://ipgeolocation.io/documentation/ip-geolocation-api.html
-        return await newAPI(`https://api.ipgeolocation.io/ipgeo?apiKey=${IPGEO_API_KEY}&ip=${ip}`)
+    } else if (api == 'ipgeolocation' || api == 'ipgeo') {
+        // https://ipgeolocation.io/documentation/ip-geolocation-api.html
+        return await newAPI(
+            `https://api.ipgeolocation.io/ipgeo?apiKey=${IPGEO_API_KEY}&ip=${ip}`,
+        )
     }
     //  else if (api == 'talos') {
     //     // https://talosintelligence.com/reputation_center/lookup?search=1.1.1.1
@@ -113,11 +139,9 @@ async function handleRequest(req) {
 
     // https://auth0.com/signals/docs/#how-to-use-the-api
     return await newAPI(`https://signals.api.auth0.com/v2.0/ip/${ip}`, {
-        'accept': 'application/json',
+        accept: 'application/json',
         'x-auth-token': AUTH0_SIGNALS_API_KEY,
     })
-
-
 
     // signals.headers.set('Cache-Control', 'max-age=7200, s-maxage=7200')
     // signals.json()['response']
@@ -158,16 +182,20 @@ function isIP(str) {
  * @param {url} string
  * @param {headers} object
  */
-async function newAPI(url, headers = {'accept': 'application/json'}, options = {}) {
+async function newAPI(
+    url,
+    headers = { accept: 'application/json' },
+    options = {},
+) {
     options.headers = headers
     options.cf = {
         // Tell Cloudflare's CDN to always cache this fetch regardless of content type
         // for a max of x seconds before revalidating the resource
         // cacheTtl: 86400, // 1 day
         cacheTtlByStatus: {
-            "200-299": 2592000, // 30 days
+            '200-299': 2592000, // 30 days
             404: 300, // 5 min
-            "500-599": -1
+            '500-599': -1,
         },
         cacheEverything: true,
     }

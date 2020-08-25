@@ -1,6 +1,6 @@
 import qr from 'qr-image'
 
-const generate = async (request) => {
+const generate = async request => {
     const { searchParams } = new URL(request.url)
     let text = 'https://qr.seby.io'
     let format = 'png'
@@ -11,7 +11,8 @@ const generate = async (request) => {
         }
     } else {
         let json = {}
-        try {// for POST that are not json
+        try {
+            // for POST that are not json
             json = await request.json()
         } catch (error) {
             return new Response('400 Bad request', {
@@ -128,6 +129,6 @@ async function handleRequest(request) {
     return response
 }
 
-addEventListener('fetch', (event) => {
+addEventListener('fetch', event => {
     event.respondWith(handleRequest(event.request))
 })

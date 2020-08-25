@@ -94,7 +94,7 @@ class Router {
 
       Example usage: curl "https://speed.seby.io/down?bytes=10000000" > /dev/null
       Example usage: wget -O /dev/null -q --show-progress "https://speed.seby.io/down?bytes=10000000"
-      Upload Example: dd if=/dev/zero bs=1000 count=3000 | curl -X POST --upload-file - "https://speed.seby.io/up" >/dev/null
+      Upload Example: dd if=/dev/urandom bs=1000 count=3000 | curl -X POST --upload-file - "https://speed.seby.io/up" >/dev/null
 
       Good Alternatives:
       Python: curl https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python

@@ -1,4 +1,4 @@
-// Depening on user agent & return format, return html if browser or plain text or json when cli
+// Depending on user agent & return format, return html if browser or plain text or json when cli
 // service worker PWA & store custom API key in browser
 
 addEventListener('fetch', event => {

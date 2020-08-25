@@ -6,10 +6,11 @@
   "author": "Vasco Asturiano <vasco@cloudflare.com>",
   "main": "index.js",
   "scripts": {
-    "build": "wrangler build",
     "test": "NODE_ENV=test jest --verbose --no-cache",
     "test-dev": "NODE_ENV=test jest --watch --no-cache",
-    "format": "prettier --write '**/*.{js,css,json,md}'"
+    "format": "prettier --write '**/*.{js,css,json,md}'",
+    "publish": "wrangler publish",
+    "build": "wrangler build"
   },
   "husky": {
     "hooks": {

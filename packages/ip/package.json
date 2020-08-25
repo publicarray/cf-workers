@@ -7,7 +7,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "format": "prettier --write '**/*.{js,css,json,md}'",
-        "publish": "wrangler publish"
+        "publish": "wrangler publish",
+        "build": "wrangler build"
     },
     "author": "Sebastian Schmidt <publicarray@users.noreply.github.com>",
     "license": "MIT",

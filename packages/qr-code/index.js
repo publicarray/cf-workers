@@ -35,23 +35,37 @@ const generate = async (request) => {
 }
 
 const landing = `<!DOCTYPE html>
-<h1>QR Generator</h1>
-<p>Click the below button to generate a new QR code.</p>
-<label for="text">Text to encode:</label>
-<input type="text" id="text" value="https://qr.seby.io"></input>
-<br>
-<label for="fileFormat">Choose a File Format:</label>
-<select id="fileFormat">
-<option value="png">PNG</option>
-<option value="svg">SVG</option>
-</select>
-<br>
-<button onclick="generate()">Generate QR Code</button>
-
-<div style="max-width:500px;" id="result">
-
-<p><pre>curl 'https://qr.seby.io/' --get -d 'text=https://qr.seby.io' -d 'format=svg'
-curl 'https://qr.seby.io/' -H 'Content-Type: application/json' --data-raw '{"text":"https://google.com","format":"svg"}'</pre></p>
+<head>
+    <!-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@1/dist/tailwind.min.css" rel="stylesheet"></link>
+    <title>QR Generator</title>
+</head>
+<body class="container mx-auto">
+    <h1 class="block text-grey-800 text-3xl font-bold">QR Generator</h1>
+    <p >Click the below button to generate a new QR code.</p>
+    <div class="bg-white shadow-md rounded flex flex-wrap my-6 md:max-w-screen-sm mx-auto">
+        <div class="w-full md:flex-1 px-3 mb-6">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="text">Text to encode:</label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-800 leading-tight focus:outline-none focus:shadow-outline" type="text" id="text" value="https://qr.seby.io"></input>
+        </div>
+        <br>
+        <div class="w-full inline-block relative md:w-64 px-3 mb-6">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="fileFormat">Choose a File Format:</label>
+            <select class="block w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" id="fileFormat">
+                <option value="png">PNG</option>
+                <option value="svg">SVG</option>
+            </select>
+        </div>
+        <br>
+        <div class="w-full px-3 mb-6">
+            <button class="bg-blue-500 hover:bg-blue-800 text-white font-bold ml-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" onclick="generate()">Generate QR Code</button>
+        </div>
+        <div class="w-full px-3 mb-6 mx-auto" style="max-width:500px;" id="result"></div>
+    </div>
+<div class="flex">
+<pre class="whitespace-pre overflow-x-auto">curl 'https://qr.seby.io/' --get -d 'text=https://qr.seby.io' -d 'format=svg'
+curl 'https://qr.seby.io/' --data-raw '{"text":"https://google.com","format":"svg"}'</pre>
+</div>
 
 <script>
     async function generate() {
@@ -95,6 +109,7 @@ curl 'https://qr.seby.io/' -H 'Content-Type: application/json' --data-raw '{"tex
         }
     }
 </script>
+</body>
 `
 
 async function handleRequest(request) {

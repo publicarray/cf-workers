@@ -1,4 +1,4 @@
-# Return Cilent IP Address - [Demo](https://ip.seby.io)
+# Display Your IP Address - [Demo](https://ip.seby.io)
 
 ```
 curl 'https://ip.seby.io'

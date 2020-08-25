@@ -2,7 +2,7 @@
     "private": true,
     "name": "raffle",
     "version": "1.0.0",
-    "description": "A template for kick starting a Cloudflare Workers project",
+    "description": "A simple random raffle book drawer",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",

@@ -30,7 +30,7 @@ const generate = async request => {
         img = qr.imageSync(text, { type: 'svg' })
     } else {
         headers = { 'Content-Type': 'image/png' }
-        img = qr.imageSync(text, { size: 15 })
+        img = qr.imageSync(text, { size: 18, margin: 1 })
     }
     return new Response(img, { headers })
 }

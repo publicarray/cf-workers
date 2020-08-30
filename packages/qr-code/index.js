@@ -80,7 +80,8 @@ curl 'https://qr.seby.io/' --data-raw '{"text":"https://google.com","format":"sv
         let result = document.getElementById("result")
 
         if (fileFormat == "svg") {
-            result.innerHTML = await qr.text()
+            let svg = await qr.text()
+            result.innerHTML = '<a href=\\'data:image/svg+xml;utf8,'+svg+'\\' download="qr-code.svg">'+svg+'</a>'
         } else if (fileFormat == "png" || fileFormat == "filereader-png") {
             cleanupOldImages(result)
             let reader = new FileReader();
@@ -108,6 +109,7 @@ curl 'https://qr.seby.io/' --data-raw '{"text":"https://google.com","format":"sv
                 result.removeChild(result.firstChild);
             }
         }
+        result.innerHTML = '';
     }
 </script>
 </body>

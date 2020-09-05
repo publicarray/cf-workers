@@ -1,4 +1,4 @@
-## Speed Test - [DEMO](speed.seby.io)
+## Speed Test - [DEMO](https://speed.seby.io)
 
 This project combines [worker-speedtest-template](https://github.com/cloudflare/worker-speedtest-template) and [LibreSpeed](https://github.com/librespeed/speedtest)
 

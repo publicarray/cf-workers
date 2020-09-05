@@ -4,6 +4,7 @@ async function handleRequest(request) {
   const res = new Response('ok');
 
   res.headers.set('access-control-allow-origin', '*');
+  res.headers.set('access-control-allow-methods', 'POST');
   res.headers.set('timing-allow-origin', '*');
 
   request.cf &&

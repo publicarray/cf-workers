@@ -1,6 +1,6 @@
-## Speed Test
+## Speed Test - [DEMO](speed.seby.io)
 
-https://github.com/cloudflare/worker-speedtest-template
+This project combines [worker-speedtest-template](https://github.com/cloudflare/worker-speedtest-template) and [LibreSpeed](https://github.com/librespeed/speedtest)
 
 ```sh
 # Download
@@ -13,7 +13,6 @@ dd if=/dev/urandom of=test.dat bs=1M count=10
 curl --http1.1 -w '%{speed_upload}\n' -sf -o/dev/null --data-binary @test.dat https://speed.seby.io/up
 curl --http2 -w '%{speed_upload}\n' -sf -o/dev/null --data-binary @test.dat https://speed.seby.io/up
 ```
-
 
 Worker for measuring download / upload connection speed from the client side, using the [Performance Timing API](https://w3c.github.io/perf-timing-primer/).
 

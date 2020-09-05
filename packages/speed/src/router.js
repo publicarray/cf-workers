@@ -90,7 +90,8 @@ class Router {
       return route.handler(req);
     }
 
-      return new Response(`Resource not found.
+    return new Response(
+      `Resource not found.
 
       Example usage: curl "https://speed.seby.io/down?bytes=10000000" > /dev/null
       Example usage: wget -O /dev/null -q --show-progress "https://speed.seby.io/down?bytes=10000000"
@@ -102,13 +103,15 @@ class Router {
       Netflix: https://fast.com/
       DSLRepots: https://www.dslreports.com/speedtest
       Ookla: https://www.speedtest.net
-      `, {
-      status: 404,
-      statusText: 'not found',
-      headers: {
-        'content-type': 'text/plain'
+      `,
+      {
+        status: 404,
+        statusText: 'not found',
+        headers: {
+          'content-type': 'text/plain'
+        }
       }
-    });
+    );
   }
 
   /**

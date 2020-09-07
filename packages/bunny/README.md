@@ -1,4 +1,4 @@
-# 📂 Bunny Folder Index - [seby.io](https://seby.io/downloads)
+# 📂 Bunny Folder Index - [seby.io](https://seby.io/download)
 
 Folder index for files hosted with BunnyCDN
 

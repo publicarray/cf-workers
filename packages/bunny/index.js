@@ -22,7 +22,7 @@ const BASE_URL = 'https://seby.io'
  * BunnyCDN PullZone Hostname to redirect requests to files
  * @type {String}
  */
-const PULL_ZONE = 'seby.b-cdn.net'
+const PULL_ZONE = 'files.seby.io'
 
 /**
  * Timezone for formatting the date string

@@ -8,6 +8,8 @@ To generate using [wrangler](https://github.com/cloudflare/wrangler)
 
 ```
 wrangler secret put BUNNY_STORAGE_ACCESS_KEY
+wrangler secret put BUNNY_TOKEN_KEY
+
 wrangler publish
 ```
 

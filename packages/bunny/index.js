@@ -1,3 +1,5 @@
+import signUrl from './token.js'
+
 /**
  * BunnyCDN Storage API ZoneName
  * @type {String}
@@ -15,6 +17,12 @@ const STORAGE_SERVER = 'https://la.storage.bunnycdn.com'
  * @type {String}
  */
 const BASE_URL = 'https://seby.io'
+
+/**
+ * BunnyCDN PullZone Hostname to redirect requests to files
+ * @type {String}
+ */
+const PULL_ZONE = 'seby.b-cdn.net'
 
 /**
  * Timezone for formatting the date string
@@ -127,6 +135,19 @@ async function getFileFromBunny(url) {
 }
 
 /**
+ *  Redirect to the file stored on BunnyCDN with an authentication token that expires in 1 hour
+ * @param  {String} url
+ * @param  {String} pathname
+ * @param  {String} ip the allowed ip address
+ * @return {Response} Redirect to File
+ */
+async function redirectToBunnyPullZone(url, pathname, ip) {
+    var signedUrl = await signUrl(url, `${BUNNY_TOKEN_KEY}`, 1 * 60 * 60, ip, false, null, null, null)
+    console.log('signed-url', signedUrl)
+    return Response.redirect(signedUrl, 302)
+}
+
+/**
  * Respond with redirect, folder index or file from BunnyCDN
  * @param {Request} request
  */
@@ -149,7 +170,8 @@ async function handleRequest(request) {
         let folderListing = await requestFolderResponse.json()
         if (folderListing.length == 0) {
             // path is a file
-            return await getFileFromBunny(`${STORAGE_SERVER}/${STORAGE_ZONE_NAME}/${pathname}`)
+            return redirectToBunnyPullZone(`https://${PULL_ZONE}/${pathname}`, pathname, request.headers.get('cf-connecting-ip'))
+            // return await getFileFromBunny(`${STORAGE_SERVER}/${STORAGE_ZONE_NAME}/${pathname}`)
         }
 
         // check if allow list contains entries

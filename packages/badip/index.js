@@ -27,16 +27,10 @@ async function handleRequest(req) {
         //     '1.1.1.1'
     }
     let params = new URL(req.url).searchParams
-    let api = 'signals'
+    let api = 'ipinfo'
     if (params.has('api')) {
         api = params.get('api')
     }
-
-    // console.log(ip)
-    // full_reputaion = await new Request(`https://signals.api.auth0.com/v2.0/ip/${ip}`, {
-    //     headers: { 'accept': 'application/json' },
-    //     headers: { 'x-auth-token': AUTH0_SIGNALS_API_KEY },
-    // })
 
     // https://mxtoolbox.com/blacklists.aspx
     // https://developers.virustotal.com/reference#ip-address-report
@@ -136,12 +130,15 @@ async function handleRequest(req) {
     //         'referer': `https://talosintelligence.com/reputation_center/lookup?search=${ip}`
     //     })
     // }
+    else if (api == 'auth0' || api == 'signals' || api == 'signal') {
+        // https://auth0.com/signals/docs/#how-to-use-the-api
+        return await newAPI(`https://signals.api.auth0.com/v2.0/ip/${ip}`, {
+            accept: 'application/json',
+            'x-auth-token': AUTH0_SIGNALS_API_KEY,
+        })
+    }
 
-    // https://auth0.com/signals/docs/#how-to-use-the-api
-    return await newAPI(`https://signals.api.auth0.com/v2.0/ip/${ip}`, {
-        accept: 'application/json',
-        'x-auth-token': AUTH0_SIGNALS_API_KEY,
-    })
+    return await newAPI(`https://ipinfo.io/${ip}?token=${IPINFO_TOKEN}`)
 
     // signals.headers.set('Cache-Control', 'max-age=7200, s-maxage=7200')
     // signals.json()['response']

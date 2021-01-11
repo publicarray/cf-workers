@@ -2,11 +2,12 @@
  * source: https://github.com/BunnyWay/BunnyCDN.TokenAuthentication/tree/master/nodejs
  */
 
-async function sha256(str) {
+async function sha256ToBase64(str) {
     const text = new TextEncoder().encode(str)
     const hashBuffer = await crypto.subtle.digest('SHA-256', text)
     const hashArray = Array.from(new Uint8Array(hashBuffer))
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('') // convert to hex
+    const hashStr = hashArray.map(b => String.fromCharCode(b)).join('')
+    return btoa(hashStr)
 }
 
 function addCountries(url, a, b) {
@@ -49,7 +50,6 @@ async function signUrl(url, securityKey, expirationTime = 3600, userIp, isDirect
         parameters.set('token_path', pathAllowed)
     }
     parameters.sort()
-    console.log('parameters')
     for (var pair of parameters.entries()) {
         let key = pair[0]
         let value = pair[1]
@@ -60,17 +60,13 @@ async function signUrl(url, securityKey, expirationTime = 3600, userIp, isDirect
         parameterData += `${key}=${value}`
         parameterDataUrl += `&${key}=` + encodeURIComponent(value)
     }
-    console.log('parameterDataUrl', parameterDataUrl)
     hashableBase = securityKey + signaturePath + expires + (userIp != null ? userIp : '') + parameterData
-    console.log('hashableBase', hashableBase)
-    token = await sha256(hashableBase)
-    console.log('sha256', token)
-    token = btoa(token)
+    token = await sha256ToBase64(hashableBase)
+    token = token
         .replace(/\n/g, '')
         .replace(/\+/g, '-')
         .replace(/\//g, '_')
         .replace(/=/g, '')
-    console.log('btoa', token)
     if (isDirectory) {
         return parsedUrl.protocol + '//' + parsedUrl.host + '/bcdn_token=' + token + parameterDataUrl + '&expires=' + expires + parsedUrl.pathname
     } else {

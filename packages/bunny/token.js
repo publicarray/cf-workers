@@ -44,9 +44,9 @@ async function signUrl(url, securityKey, expirationTime = 3600, userIp, isDirect
     var url = addCountries(url, countriesAllowed, countriesBlocked)
     var parsedUrl = new URL(url)
     var parameters = parsedUrl.searchParams
-    signaturePath = parsedUrl.pathname
+    signaturePath = decodeURIComponent(parsedUrl.pathname)
     if (pathAllowed != null) {
-        signaturePath = pathAllowed
+        signaturePath = decodeURIComponent(pathAllowed)
         parameters.set('token_path', pathAllowed)
     }
     parameters.sort()

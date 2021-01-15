@@ -13,16 +13,36 @@ const STORAGE_ZONE_NAME = 'seby-io'
 const STORAGE_SERVER = 'https://la.storage.bunnycdn.com'
 
 /**
- * The base url of the worker, failed redirects go here
+ * The base url of the worker, failed requests get redirected here
  * @type {String}
  */
 const BASE_URL = 'https://seby.io'
 
 /**
- * BunnyCDN PullZone Hostname to redirect requests to files
+ * BunnyCDN PullZone Hostname to redirect requests to files (Optional)
  * @type {String}
  */
 const PULL_ZONE = 'files.seby.io'
+
+// Token Authentication
+/**
+ * Enable Token Authentication
+ * @type {Boolean}
+ */
+const TOKEN_AUTHENTICATION = true
+
+/**
+ * Check the ip address when generating authentication token
+ * @type {Boolean}
+ */
+const VALIDATE_IP_ADDRESS = false
+
+/**
+ * Time the link can be used for in hours
+ * @type {Double}
+ */
+const VALIDITY_TIME = 1
+// End Token Authentication
 
 /**
  * Timezone for formatting the date string
@@ -137,14 +157,20 @@ async function getFileFromBunny(url) {
 /**
  *  Redirect to the file stored on BunnyCDN with an authentication token that expires in 1 hour
  * @param  {String} url
- * @param  {String} pathname
+ * @param  {String} pathname pathAllowed
  * @param  {String} ip the allowed ip address
  * @return {Response} Redirect to File
  */
 async function redirectToBunnyPullZone(url, pathname, ip) {
-    var signedUrl = await signUrl(url, `${BUNNY_TOKEN_KEY}`, 1 * 60 * 60, ip, false, null, null, null)
-    console.log('signed-url', signedUrl)
-    return Response.redirect(signedUrl, 302)
+    if (TOKEN_AUTHENTICATION) {
+        if (VALIDATE_IP_ADDRESS) {
+            var url = await signUrl(url, `${BUNNY_TOKEN_KEY}`, VALIDITY_TIME * 60 * 60, ip, false, null, null, null)
+        } else {
+            var url = await signUrl(url, `${BUNNY_TOKEN_KEY}`, VALIDITY_TIME * 60 * 60, null, false, null, null, null)
+        }
+        console.log('signed-url', url)
+    }
+    return Response.redirect(url, 302)
 }
 
 /**
@@ -170,8 +196,10 @@ async function handleRequest(request) {
         let folderListing = await requestFolderResponse.json()
         if (folderListing.length == 0) {
             // path is a file
-            return redirectToBunnyPullZone(`https://${PULL_ZONE}/${pathname}`, pathname, request.headers.get('cf-connecting-ip'))
-            // return await getFileFromBunny(`${STORAGE_SERVER}/${STORAGE_ZONE_NAME}/${pathname}`)
+            if (PULL_ZONE.length > 0) {
+                return redirectToBunnyPullZone(`https://${PULL_ZONE}/${pathname}`, pathname, request.headers.get('cf-connecting-ip'))
+            }
+            return await getFileFromBunny(`${STORAGE_SERVER}/${STORAGE_ZONE_NAME}/${pathname}`)
         }
 
         // check if allow list contains entries

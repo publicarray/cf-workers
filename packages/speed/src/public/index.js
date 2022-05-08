@@ -16,8 +16,7 @@ var SPEEDTEST_SERVERS=[
         dlURL:"down?bytes=10000000",
         ulURL:"up",
         pingURL:"ping",
-        getIpURL:"https://fi.openspeed.org/getIP.php"
-        //getIpURL:"https://ip.seby.io"
+        getIpURL:"https://ip.seby.io"
     }
     //add other servers here, comma separated
 ];

@@ -16,7 +16,7 @@ dd if=/dev/urandom of=test.dat bs=1M count=10
 curl --http1.1 -w '%{speed_upload}\n' -sf -o/dev/null --data-binary @test.dat https://speed.seby.io/up
 curl --http2 -w '%{speed_upload}\n' -sf -o/dev/null --data-binary @test.dat https://speed.seby.io/up
 # Windows PowerShell
-($0 = new-object byte[] 1250000) | curl -X POST --upload-file - "https://speed.seby.io/up" >nil
+($0 = new-object byte[] 1000000) | curl -X POST --upload-file - "https://speed.seby.io/up" >nil
 ```
 
 Worker for measuring download / upload connection speed from the client side, using the [Performance Timing API](https://w3c.github.io/perf-timing-primer/).

@@ -1,6 +1,6 @@
 compatibility_date = "2022-10-02"
 name = "qr-code"
 account_id = "5a007c3f1b1463e3f024ef2a654e3307"
-route = "qr.seby.io/*"
+route = { pattern = "qr.seby.io/*", zone_name = "seby.io" }
 main = "index.js"
 node_compat = true

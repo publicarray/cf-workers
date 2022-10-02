@@ -1,5 +1,8 @@
 compatibility_date = "2022-10-02"
 name = "speed"
 account_id = "5a007c3f1b1463e3f024ef2a654e3307"
-route = "speed.seby.io/*"
+routes = [
+    { pattern = "speed.seby.io/*", zone_name = "seby.io" },
+    { pattern = "speed.seby.au/*", zone_name = "seby.au" }
+]
 main = "index.js"

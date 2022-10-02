@@ -1,6 +1,9 @@
 compatibility_date = "2022-10-02"
 name = "qr-code"
 account_id = "5a007c3f1b1463e3f024ef2a654e3307"
-route = { pattern = "qr.seby.io/*", zone_name = "seby.io" }
+routes = [
+    { pattern = "qr.seby.io/*", zone_name = "seby.io" },
+    { pattern = "qr.seby.au/*", zone_name = "seby.au" }
+]
 main = "index.js"
 node_compat = true

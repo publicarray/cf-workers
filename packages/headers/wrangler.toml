@@ -1,5 +1,8 @@
 compatibility_date = "2022-10-02"
 name = "headers"
 account_id = "5a007c3f1b1463e3f024ef2a654e3307"
-route = "headers.seby.io"
+routes = [
+    { pattern = "headers.seby.io", zone_name = "seby.io" },
+    { pattern = "headers.seby.au", zone_name = "seby.au" }
+]
 main = "index.js"

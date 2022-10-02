@@ -1,5 +1,8 @@
 compatibility_date = "2022-10-02"
 name = "ip"
 account_id = "5a007c3f1b1463e3f024ef2a654e3307"
-route = "ip.seby.io/*"
+routes = [
+    { pattern = "ip.seby.io/*", zone_name = "seby.io" },
+    { pattern = "ip.seby.au/*", zone_name = "seby.au" }
+]
 main = "index.js"

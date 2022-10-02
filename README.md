@@ -6,8 +6,8 @@
 
     
 ```
-lerna bootstrap
-lerna run format
-lerna run build
-lerna run publish
+npx lerna bootstrap
+npx lerna run format
+npx lerna run build
+npx lerna run publish
 ```

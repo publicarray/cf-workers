@@ -1,7 +1,6 @@
 compatibility_date = "2022-10-02"
 name = "mailer"
 account_id = "5a007c3f1b1463e3f024ef2a654e3307"
-route = "mailer.seby.io"
 main = "index.js"
 
 [env.staging]

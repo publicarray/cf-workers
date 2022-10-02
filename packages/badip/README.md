@@ -1,9 +1,11 @@
 # badip API
 
 ## Usage:
+
 Note: By default this API queries https://ipinfo.io/
 
 I recommend to use [jq](https://stedolan.github.io/jq/) or [jql](https://github.com/yamafaktory/jql) to refine the result
+
 ```
 curl -s 'https://badip.seby.io/31.132.211.144?api=xforce' | jq .score
 

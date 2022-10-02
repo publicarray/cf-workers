@@ -69,9 +69,9 @@ async function handleRequest(req) {
     } else if (api == 'stopforumspam') {
         // https://www.stopforumspam.com/usage // included in signals
         return await newAPI(`https://api.stopforumspam.org/api?ip=${ip}&jsonp`)
-//     } else if ((api == 'iptoasn', api == 'asn')) {
-//         // https://iptoasn.com/
-//         return await newAPI(`https://api.iptoasn.com/v1/as/ip/${ip}`)
+        //     } else if ((api == 'iptoasn', api == 'asn')) {
+        //         // https://iptoasn.com/
+        //         return await newAPI(`https://api.iptoasn.com/v1/as/ip/${ip}`)
     } else if (api == 'securitytrails' || api == 'dns') {
         // https://docs.securitytrails.com/docs/overview
         // https://docs.securitytrails.com/reference#general
@@ -130,13 +130,13 @@ async function handleRequest(req) {
     //         'referer': `https://talosintelligence.com/reputation_center/lookup?search=${ip}`
     //     })
     // }
-//     else if (api == 'auth0' || api == 'signals' || api == 'signal') {
-//         // https://auth0.com/signals/docs/#how-to-use-the-api
-//         return await newAPI(`https://signals.api.auth0.com/v2.0/ip/${ip}`, {
-//             accept: 'application/json',
-//             'x-auth-token': AUTH0_SIGNALS_API_KEY,
-//         })
-//     }
+    //     else if (api == 'auth0' || api == 'signals' || api == 'signal') {
+    //         // https://auth0.com/signals/docs/#how-to-use-the-api
+    //         return await newAPI(`https://signals.api.auth0.com/v2.0/ip/${ip}`, {
+    //             accept: 'application/json',
+    //             'x-auth-token': AUTH0_SIGNALS_API_KEY,
+    //         })
+    //     }
 
     return await newAPI(`https://ipinfo.io/${ip}?token=${IPINFO_TOKEN}`)
 

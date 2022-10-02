@@ -4,10 +4,11 @@
 
 #### You can use [Lerna](https://github.com/lerna/lerna) to operate on all projects
 
-    
+
 ```
+npm install wrangler@latest
 npx lerna bootstrap
 npx lerna run format
 npx lerna run build
-npx lerna run publish
+CLOUDFLARE_API_TOKEN=XXXXXXXXX npx lerna run publish
 ```

@@ -9,7 +9,7 @@
     "test-dev": "NODE_ENV=test jest --watch --no-cache",
     "format": "prettier --write '**/*.{js,css,json,md}'",
     "publish": "wrangler publish",
-    "build": "wrangler build"
+    "build": "wrangler publish --dry-run --outdir=dist"
   },
   "husky": {
     "hooks": {

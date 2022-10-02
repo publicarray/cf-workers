@@ -7,9 +7,9 @@ addEventListener('fetch', event => {
  */
 async function handleRequest(req) {
     return new Response(req.headers.get('CF-Connecting-IP'), {
-        headers: { 
+        headers: {
             'content-type': 'text/plain',
-            'access-control-allow-origin': '*'
+            'access-control-allow-origin': '*',
         },
     })
 }

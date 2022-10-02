@@ -2,6 +2,7 @@
   "name": "root",
   "private": true,
   "devDependencies": {
-    "lerna": "^5.5.4"
+    "lerna": "^5.5.4",
+    "wrangler": "^2.1.9"
   }
 }

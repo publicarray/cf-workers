@@ -162,12 +162,12 @@ const landing = `<!DOCTYPE html>
         cursor: pointer;
         font-size: 100%;
     }
-    .hover\\:bg-blue-800:hover {
+    .bg-blue-800:hover {
         --bg-opacity: 1;
         background-color: #2c5282;
         background-color: rgba(44,82,130,var(--bg-opacity));
     }
-    .focus\\:outline-none:focus {
+    .outline-none:focus {
         outline: 2px solid transparent;
         outline-offset: 2px;
     }
@@ -183,13 +183,13 @@ const landing = `<!DOCTYPE html>
         .container {
             max-width: 768px;
         }
-        .md\\:max-w-screen-sm {
+        .md-max-w-screen-sm {
             max-width: 640px;
         }
-        .md\\:flex-1 {
+        .md-flex-1 {
             flex: 1 1 0%;
         }
-        .md\\:w-64 {
+        .md-w-64 {
             width: 16rem;
         }
     }
@@ -208,13 +208,13 @@ const landing = `<!DOCTYPE html>
 <body class="container mx-auto">
     <h1 class="block text-grey-800 text-3xl font-bold">QR Generator</h1>
     <p >Click the below button to generate a new QR code.</p>
-    <div class="bg-white shadow-md rounded flex flex-wrap my-6 md:max-w-screen-sm mx-auto">
-        <div class="w-full md:flex-1 px-3 mb-6">
+    <div class="bg-white shadow-md rounded flex flex-wrap my-6 md-max-w-screen-sm mx-auto">
+        <div class="w-full md-flex-1 px-3 mb-6">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="text">Text to encode:</label>
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-800 leading-tight focus:outline-none focus:shadow-outline" type="text" id="text" value="https://qr.seby.io"></input>
         </div>
         <br>
-        <div class="w-full inline-block relative md:w-64 px-3 mb-6">
+        <div class="w-full inline-block relative md-w-64 px-3 mb-6">
             <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="fileFormat">Choose a File Format:</label>
             <select class="block w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" id="fileFormat">
                 <option value="png">PNG</option>

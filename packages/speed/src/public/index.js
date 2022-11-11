@@ -99,7 +99,7 @@ function I(id){return document.getElementById(id);}
             --bg-color: #222326;
         }
     }
-        
+
     html,body{
         border:none; padding:0; margin:0;
     }
@@ -111,7 +111,7 @@ function I(id){return document.getElementById(id);}
         transition: color ease 0.5s, background ease 0.5s;
     }
     h1{
-        color:#404040;
+        color: var(--font-color);
     }
     #startStopBtn{
         display:inline-block;

@@ -3,6 +3,26 @@ const indexHTML = `
 <html>
 <head>
     <title>Random Raffle Draw</title>
+    <style>
+    :root { /* light ☀️ */
+        color-scheme: light dark;
+        --font-color: #000;
+        --bg-color: #f1f1f1;
+    }
+    /* https://caniuse.com/#feat=prefers-color-scheme */
+    @media (prefers-color-scheme: dark) {
+        :root { /* dark 🌘 */
+            --font-color: #e6eaea;
+            --bg-color: #222326;
+        }
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+        background: var(--bg-color);
+        color: var(--font-color);
+        transition: color ease 0.5s, background ease 0.5s;
+    }
+    </style>
 </head>
 <body>
 <h1>Random Raffle Draw</h1>

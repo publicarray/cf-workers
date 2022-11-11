@@ -37,9 +37,173 @@ const generate = async request => {
 
 const landing = `<!DOCTYPE html>
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@1/dist/tailwind.min.css" rel="stylesheet"></link>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>QR Generator</title>
+    <style>
+    :root { /* light ☀️ */
+        color-scheme: light dark;
+        --font-color: #000;
+        --bg-color: #f1f1f1;
+    }
+    /* https://caniuse.com/#feat=prefers-color-scheme */
+    @media (prefers-color-scheme: dark) {
+        :root { /* dark 🌘 */
+            --font-color: #e6eaea;
+            --bg-color: #222326;
+        }
+    }
+    *, ::after, ::before {
+        box-sizing: border-box;
+        border-width: 0;
+        border-style: solid;
+        border-color: #e2e8f0;
+    }
+    body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+        background: var(--bg-color);
+        color: var(--font-color);
+        transition: color ease 0.5s, background ease 0.5s;
+    }
+    /* https://tailwindcss.com/ */
+    .w-full {
+        width: 100%;
+    }
+    .px-3 {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    .py-2 {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+    .mb-6 {
+        margin-bottom: 1.5rem;
+    }
+    .mx-auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .my-6 {
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .flex-wrap {
+        flex-wrap: wrap;
+    }
+    .flex {
+        display: flex;
+    }
+    .rounded {
+        border-radius: 0.25rem;
+    }
+    .tracking-wide {
+        letter-spacing: .025em;
+    }
+    .uppercase {
+        text-transform: uppercase;
+    }
+    .mb-2 {
+        margin-bottom: 0.5rem;
+    }
+    .text-xs {
+        font-size: .75rem;
+    }
+    .font-bold {
+        font-weight: 700;
+    }
+    .block {
+        display: block;
+    }
+    .shadow {
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
+    }
+    .shadow-md {
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
+    }
+    .flex-wrap {
+        flex-wrap: wrap;
+    }
+    .flex {
+        display: flex;
+    }
+    .relative {
+        position: relative;
+    }
+    .leading-tight {
+        line-height: 1.25;
+    }
+    .border {
+        border-width: 1px;
+    }
+    .rounded {
+        border-radius: 0.25rem;
+    }
+    .appearance-none {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+    .whitespace-pre {
+        white-space: pre;
+    }
+    .overflow-x-auto {
+        overflow-x: auto;
+    }
+    .bg-blue-500 {
+        --bg-opacity: 1;
+        background-color: #4299e1;
+        background-color: rgba(66,153,225,var(--bg-opacity));
+    }
+    [type=button], [type=reset], [type=submit], button {
+        -webkit-appearance: button;
+    }
+    [role=button], button {
+        cursor: pointer;
+        font-size: 100%;
+    }
+    .hover\:bg-blue-800:hover {
+        --bg-opacity: 1;
+        background-color: #2c5282;
+        background-color: rgba(44,82,130,var(--bg-opacity));
+    }
+    .focus\:outline-none:focus {
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+    }
+    .container {
+        width: 100%;
+    }
+    @media (min-width: 640px) {
+        .container {
+            max-width: 640px;
+        }
+    }
+    @media (min-width: 768px) {
+        .container {
+            max-width: 768px;
+        }
+        .md\:max-w-screen-sm {
+            max-width: 640px;
+        }
+        .md\:flex-1 {
+            flex: 1 1 0%;
+        }
+        .md\:w-64 {
+            width: 16rem;
+        }
+    }
+    @media (min-width: 1024px) {
+        .container {
+            max-width: 1024px;
+        }
+    }
+    @media (min-width: 1280px) {
+        .container {
+            max-width: 1280px;
+        }
+    }
+    </style>
 </head>
 <body class="container mx-auto">
     <h1 class="block text-grey-800 text-3xl font-bold">QR Generator</h1>
@@ -59,7 +223,7 @@ const landing = `<!DOCTYPE html>
         </div>
         <br>
         <div class="w-full px-3 mb-6">
-            <button class="bg-blue-500 hover:bg-blue-800 text-white font-bold ml-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" onclick="generate()">Generate QR Code</button>
+            <button class="bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" onclick="generate()">Generate QR Code</button>
         </div>
         <div class="w-full px-3 mb-6 mx-auto" style="max-width:500px;" id="result"></div>
     </div>

@@ -87,14 +87,28 @@ function I(id){return document.getElementById(id);}
 </script>
 
 <style type="text/css">
+    :root { /* light ☀️ */
+        color-scheme: light dark;
+        --font-color: #000;
+        --bg-color: #f1f1f1;
+    }
+    /* https://caniuse.com/#feat=prefers-color-scheme */
+    @media (prefers-color-scheme: dark) {
+        :root { /* dark 🌘 */
+            --font-color: #e6eaea;
+            --bg-color: #222326;
+        }
+    }
+        
     html,body{
         border:none; padding:0; margin:0;
-        background:#FFFFFF;
-        color:#202020;
     }
     body{
         text-align:center;
-        font-family:"Roboto",sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+        background: var(--bg-color);
+        color: var(--font-color);
+        transition: color ease 0.5s, background ease 0.5s;
     }
     h1{
         color:#404040;
@@ -102,7 +116,7 @@ function I(id){return document.getElementById(id);}
     #startStopBtn{
         display:inline-block;
         margin:0 auto;
-        color:#6060AA;
+        color: var(--font-color);
         background-color:rgba(0,0,0,0);
         border:0.15em solid #6060FF;
         border-radius:0.3em;

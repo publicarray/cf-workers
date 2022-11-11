@@ -162,12 +162,12 @@ const landing = `<!DOCTYPE html>
         cursor: pointer;
         font-size: 100%;
     }
-    .hover\:bg-blue-800:hover {
+    .hover\\:bg-blue-800:hover {
         --bg-opacity: 1;
         background-color: #2c5282;
         background-color: rgba(44,82,130,var(--bg-opacity));
     }
-    .focus\:outline-none:focus {
+    .focus\\:outline-none:focus {
         outline: 2px solid transparent;
         outline-offset: 2px;
     }
@@ -183,13 +183,13 @@ const landing = `<!DOCTYPE html>
         .container {
             max-width: 768px;
         }
-        .md\:max-w-screen-sm {
+        .md\\:max-w-screen-sm {
             max-width: 640px;
         }
-        .md\:flex-1 {
+        .md\\:flex-1 {
             flex: 1 1 0%;
         }
-        .md\:w-64 {
+        .md\\:w-64 {
             width: 16rem;
         }
     }

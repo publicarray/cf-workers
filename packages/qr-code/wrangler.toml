@@ -7,3 +7,5 @@ routes = [
 ]
 main = "index.js"
 node_compat = true
+[site]
+bucket = "./public"

@@ -1,4 +1,5 @@
 import qr from 'qr-image'
+import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
 
 const generate = async request => {
     const { searchParams } = new URL(request.url)
@@ -276,25 +277,62 @@ curl 'https://qr.seby.io/' --data-raw '{"text":"https://google.com","format":"sv
         result.innerHTML = '';
     }
 </script>
+
+
+<h1 class="block text-grey-800 text-3xl font-bold">QR Detector</h1>
+<label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="file-selector">Choose an image file</label>
+<input type="file" id="file-selector">
+<pre id="file-qr-result"></pre>
+<br>
+<a href="https://github.com/nimiq/qr-scanner">QR Detector source</a>
+<script type="module">
+import QrScanner from "/qr-scanner.min.js";
+const fileSelector = document.getElementById('file-selector');
+const fileQrResult = document.getElementById('file-qr-result');
+function setResult(label, result) {
+    console.log(result.data);
+    label.textContent = result.data;
+}
+fileSelector.addEventListener('change', event => {
+    const file = fileSelector.files[0];
+    if (!file) {
+        return;
+    }
+    QrScanner.scanImage(file, { returnDetailedScanResult: true })
+        .then(result => setResult(fileQrResult, result))
+        .catch(e => setResult(fileQrResult, { data: e || 'No QR code found.' }));
+});
+</script
 </body>
 `
 
-async function handleRequest(request) {
+async function handleRequest(event) {
+    let request = event.request
     let response
-    let { searchParams } = new URL(request.url)
-    console.log(searchParams, searchParams.has('text'))
+    let { searchParams, pathname} = new URL(request.url)
+    console.log(searchParams, pathname, searchParams.has('text'))
     if (request.method === 'POST' || searchParams.has('text')) {
         response = await generate(request)
-    } else {
+    } else if (pathname === "/") {
         response = new Response(landing, {
             headers: {
                 'Content-Type': 'text/html; charset=utf-8',
             },
         })
+    } else {
+        try {
+            response = await getAssetFromKV(event)
+        } catch (e) {
+            let pathname = new URL(event.request.url).pathname;
+            return new Response(`"${pathname}" not found`, {
+                status: 404,
+                statusText: "not found",
+            })
+        }
     }
     return response
 }
 
 addEventListener('fetch', event => {
-    event.respondWith(handleRequest(event.request))
+    event.respondWith(handleRequest(event))
 })

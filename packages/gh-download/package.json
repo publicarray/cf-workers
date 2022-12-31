@@ -1,0 +1,18 @@
+{
+    "private": true,
+    "name": "gh-download",
+    "version": "1.0.0",
+    "description": "Redirect to most recent release direct download of an asset",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "format": "prettier --write '**/*.{js,css,json,md}'",
+        "publish": "wrangler publish",
+        "build": "wrangler publish --dry-run --outdir=dist"
+    },
+    "author": "Sebastian Schmidt <publicarray@users.noreply.github.com>",
+    "license": "MIT",
+    "devDependencies": {
+        "prettier": "^2.7.1"
+    }
+}

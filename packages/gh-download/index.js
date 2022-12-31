@@ -15,9 +15,11 @@ async function handleRequest(request) {
 
     if (pathname == "/") {
         return new Response(
-            "Having trouble getting a direct link to the latest release on github?\nTry adding a path: https://gh-release.publicarray.workers.dev/$user/$reposetory\nFor Example: https://gh-release.publicarray.workers.dev/lostindark/DriverStoreExplorer\nIf there are multiple assets you can match againt the file name otherwise the first one is returned\nE.g. https://gh-release.publicarray.workers.dev/Klocman/Bulk-Crap-Uninstaller?name=portable or https://gh-release.publicarray.workers.dev/Klocman/Bulk-Crap-Uninstaller?name=setup",
+            "Having trouble getting a direct link to the latest release on github?\nTry adding a path: https://gh.seby.io/$user/$reposetory\nFor Example: https://gh.seby.io/lostindark/DriverStoreExplorer\nIf there are multiple assets you can match againt the file name otherwise the first one is returned\nE.g. https://gh.seby.io/Klocman/Bulk-Crap-Uninstaller?name=portable or https://gh.seby.io/Klocman/Bulk-Crap-Uninstaller?name=setup",
             {
-                headers: { "Content-Type": "text/text; charset=utf-8" },
+                headers: {
+                    "Content-Type": "text/plain; charset=utf-8",
+                },
             }
         )
     }
@@ -29,8 +31,8 @@ async function handleRequest(request) {
         {
             headers: {
                 Accept: "application/vnd.github+json",
-                "User-Agent":
-                    "gh-release-redirect/0 <https://gh-release.publicarray.workers.dev>",
+                "User-Agent": "gh-download-redirect/1.0 <https://gh.seby.io>",
+                "X-GitHub-Api-Version": "2022-11-28",
             },
             cf: {
                 cacheTtl: 86400,

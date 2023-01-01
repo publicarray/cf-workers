@@ -15,7 +15,7 @@ async function handleRequest(request) {
 
     if (pathname == "/") {
         return new Response(
-            "Having trouble getting a direct link to the latest release on github?\nTry adding a path: https://gh.seby.io/$user/$reposetory\nFor Example: https://gh.seby.io/lostindark/DriverStoreExplorer\nIf there are multiple assets you can match againt the file name otherwise the first one is returned\nE.g. https://gh.seby.io/Klocman/Bulk-Crap-Uninstaller?name=portable or https://gh.seby.io/Klocman/Bulk-Crap-Uninstaller?name=setup",
+            "Having trouble getting a direct link to the latest release on GitHub?\nTry adding a path: https://gh.seby.io/$user/$reposetory\nFor Example: https://gh.seby.io/lostindark/DriverStoreExplorer\nIf there are multiple assets you can match against the file name otherwise the first one is returned\nE.g. https://gh.seby.io/Klocman/Bulk-Crap-Uninstaller?name=portable or https://gh.seby.io/Klocman/Bulk-Crap-Uninstaller?name=setup",
             {
                 headers: {
                     "Content-Type": "text/plain; charset=utf-8",
